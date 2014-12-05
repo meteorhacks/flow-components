@@ -1,0 +1,11 @@
+<body>
+ <div id="lean">
+   {{>render component="lean.main"}}
+ </div>
+</body>
+
+<template name="lean.main">
+  {{#if state.layout}}
+    {{> Template.dynamic template=state.layout data=state.regions }}
+  {{/if}}
+</template>

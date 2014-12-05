@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Lean Components',
-  version: '0.0.1',
+  version: '0.0.2',
   git: 'https://github.com/meteorhacks/lean-components',
   name: "meteorhacks:lean-components"
 });

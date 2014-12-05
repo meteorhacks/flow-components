@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@0.9.0');
+  api.versionsFrom('METEOR@0.9.2');
   api.use('ui');
   api.use('templating');
   api.use('reactive-var');

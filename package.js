@@ -16,6 +16,5 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/component.js', 'client');
   api.addFiles('lib/client/api.js', 'client');
   api.addFiles('lib/client/lean.main.html', 'client');
-  api.addFiles('lib/client/lean.main.js', 'client');
   api.export(['LeanComponents']);
 });

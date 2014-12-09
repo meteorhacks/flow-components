@@ -1,8 +1,8 @@
 Package.describe({
-  summary: 'Lean Components',
+  summary: 'Echo Components',
   version: '0.0.7',
-  git: 'https://github.com/meteorhacks/lean-components',
-  name: "meteorhacks:lean-components"
+  git: 'https://github.com/meteorhacks/echo-components',
+  name: "meteorhacks:echo-components"
 });
 
 Package.onUse(function (api) {
@@ -15,6 +15,6 @@ Package.onUse(function (api) {
   
   api.addFiles('lib/client/component.js', 'client');
   api.addFiles('lib/client/api.js', 'client');
-  api.addFiles('lib/client/lean.main.html', 'client');
-  api.export(['LeanComponents']);
+  api.addFiles('lib/client/echo.main.html', 'client');
+  api.export(['EchoComponents']);
 });

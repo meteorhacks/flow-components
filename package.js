@@ -12,7 +12,7 @@ Package.onUse(function (api) {
   api.use('reactive-var');
   api.use('reactive-dict');
   api.use('underscore');
-  api.use('raix:eventemitter@0.0.2');
+  api.use('raix:eventemitter@0.1.1');
   
   api.addFiles('lib/client/action_hub.js', 'client');
   api.addFiles('lib/client/component.js', 'client');

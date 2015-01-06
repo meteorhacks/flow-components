@@ -17,6 +17,7 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/utils.js', 'client');
   api.addFiles('lib/client/action_hub.js', 'client');
   api.addFiles('lib/client/component.js', 'client');
+  api.addFiles('lib/client/component_instance.js', 'client');
   api.addFiles('lib/client/api.js', 'client');
   api.addFiles('lib/client/lookup.js', 'client');
   api.addFiles('lib/client/main.html', 'client');

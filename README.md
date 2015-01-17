@@ -1,3 +1,5 @@
+> This documentation is too old. This is not what we've right now. Just wait couple of weeks for the complete docs :)
+
 ## Flow Components
 
 Flow Components is a new way of building Meteor apps. It's a part of flow project and Flow Components is used to build the UI.

@@ -264,7 +264,11 @@ Sometimes we create similar kind of components. Then, we've to copy and paste a 
 That's why Mixins going to help us. With mixins we can group a set of common code and extend it with a existing components. Let's say we need to add component level subscriptions to Flow, this is how to do it :)
 
 ~~~js
-var ComponentSubs = {};
+ComponentSubs = {
+  prototype: {},
+  action: {},
+  state: {}
+};
 
 ComponentSubs.created = function() {
   this._subs = [];
@@ -633,8 +637,3 @@ It might be possible to use Angular with Flow Components. But havn't try that ye
 #### Blaze 2
 
 There is [proposal](https://meteor.hackpad.com/Proposal-for-Blaze-2-bRAxvfDzCVv) for Blaze 2. It has a it's own component system. It's still in the design phase. We designed Flow Components for our internal use at MeteorHacks. We've build few projects with Flow and it's unlikly we'll switch to a new component system unless it has all of our features. Which is unlikely to happen anyway :D
-
-#Todo
-
-* Remove $ from callAction (test it)
-* Add created, rendered, destroyed support for mixins

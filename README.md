@@ -21,6 +21,7 @@ We've also added some handy features which will help you to control reactivity w
 * [State Functions](#state-functions)
 * [Content Blocks](#content-blocks)
 * [Referencing Child Components](#referencing-child-components)
+* [Refer All Child Components](#refer-all-child-components)
 * [Organizing Large Components](#organizing-large-components)
 * [Accessing Component DOM](#accessing-component-dom)
 * [How Flow Component different from XXX](#how-flow-components-different-from-xxx)
@@ -596,6 +597,19 @@ See, we could access individual child component by their id and get the state ca
 * You can't access it inside the component. (We add this restriction to avoid unnecessary re-renders)
 * Unlike an "id" in CSS, here "id" is scope to a component. You can have child components with the same id in few different components.
 * You can nest child lookups.
+
+## Refer All Child Components
+
+> This API is experimental.
+
+This API is just like `FlowComponents.child()`, but it gives all the child components inside the current component.
+
+~~~js
+var allChildComponents = FlowComponents.children();
+allChildComponents.forEach(function(child) {
+  console.log(child.getState("value"));
+});
+~~~
 
 ## Organizing Large Components
 

@@ -2,7 +2,7 @@
 
 Build your Meteor app with Components.
 
-Flow Components has taken a lot of concepts from React and apply them on top Blaze. It's not a 1-1 mapping of react since we are using the reactivity in Blaze.
+Flow Components has taken a lot of concepts from React's component model and apply them on top Blaze. It's not a 1-1 mapping of React.
 
 We've also added some handy features which will help you to control reactivity when building a large application.
 
@@ -19,7 +19,7 @@ We've also added some handy features which will help you to control reactivity w
 * Life Cycle Events
 * Autoruns
 * State Functions
-* Block Helpers
+* Content Blocks
 * Referencing Child Components
 * Organizing Large Components
 * Accessing Component DOM
@@ -27,9 +27,9 @@ We've also added some handy features which will help you to control reactivity w
 
 ## Why?
 
-When we were building the kadira.io at first, we've no idea how to architect a Meteor app. After working with almost 1.5 years, we releazied we are doing it wrong. 
+When we were building the [kadira.io](https://kaidra.io) at first, we've no idea how to architect a Meteor app. After working with almost 1.5 years, we released we are doing it wrong. 
 
-So, we think a lot and played with a lot of UI frameworks and concepts. That included react and flux. After a lot of iterations and experiments, Flow Components is our component framework which is a part of the Flow Architecture. 
+So, we think a lot and played with a lot of UI frameworks and concepts. That includes [React](http://facebook.github.io/react/) and [Flux](https://facebook.github.io/flux/). After a lot of iterations and experiments, Flow Components is our component framework which is a part of the Flow Architecture for Meteor.
 
 ## Getting Started
 
@@ -41,21 +41,21 @@ First add Flow Components into your app.
 meteor add meteorhacks:flow-components
 ~~~
 
-Then create directory on the client folder and put these files.
+Then create directory on the client directory of your Meteor app and put these files.
 
 Here's the JavaScript file, (`component.js`) which is the component.
 
 ~~~js
 var component = FlowComponents.define('hello-component', function(props) {
   console.log("A component created!");
-  var self = this;
   this.name = props.name;
   
-  this.setGreeting();
-  setInterval(this.setGreeting.bind(this), 300);
+  this.setRandomGreeting();
+  // change the greeting for every 300 millis
+  setInterval(this.setRandomGreeting.bind(this), 300);
 });
 
-component.prototype.setGreeting = function() {
+component.prototype.setRandomGreeting = function() {
   var greetings = ["awesome", "nice", "cool", "kind"];
   var randomGreeting = messages[Math.floor(messages.length * Math.random())];
   this.set("greeting", randomGreeting)
@@ -66,7 +66,7 @@ component.state.message = function() {
 };
 ~~~
 
-Now we need our template(`view.html`). It's name should be identical to the name of the component which is `hello-component`.
+Now we need to create our template(`view.html`). It's name should be identical to the name of the component which is `hello-component`.
 
 ~~~html
 <template name="hello-component">
@@ -85,7 +85,7 @@ Then, let's add a CSS file for our component.
 }
 ~~~
 
-Now we've created our first component. We can render it anywhere we like. Here's how to do it.
+That's all. We've created our first component. We can render it anywhere we like. Here's how to do it.
 
 ~~~html
 {{> render component="hello-component" name="Arunoda"}}
@@ -100,26 +100,32 @@ Check [this repo](https://github.com/flow-examples/hello-component) for the comp
 
 ## States
 
-State is a variable which is reactive. It can hold any JavaScript literal or object. This is very similar to a template helper is blaze, but it's intergrated into the component.
+State is a variable which is reactive. It can hold any JavaScript literal or an object. This is very similar to a template helper, but it's integrated into the component.
 
 There are couple of ways, you can get a state. This is the first way.
 
 #### Creating states using `component.state.`
 
-~~~
+~~~js
 var component = FlowComponents.define('my-component');
 component.state.message = function() {
   return "some value";
 };
 ~~~
 
-Above function is running in a reactive context and you can use anykind of reactive variables, Session variables and MiniMongo Apis inside it.
+Above function is running in a reactive context. So, you can use any kind of reactive variables, Session variables and MiniMongo APIs inside it.
 
-Context of the above function will be the component itself.
+Context of the above function is the component itself. That's the main difference from a template helper.
 
 #### Creating states using `this.set`
 
-You can also set an state with `this.set` API. This is an api of the component. So, you can use it anywhere withing the component.
+You can also set an state with `this.set` API. This is an API of the component. So, you can use it anywhere withing the component. This is how to implement the above example via `this.set`.
+
+~~~js
+var component = FlowComponents.define('my-component', function() {
+  this.set("message", "some value");
+});
+~~~
 
 #### Accessing states inside a template
 
@@ -148,7 +154,9 @@ component.state.messageWithName = function() {
 
 ## Actions
 
-Components don't handle DOM events directly. For that we need to create an action call that action inside a DOM event handler. This is how do create an action.
+Components don't handle DOM events directly. But a component has actions. You can think actions are a kind of way to trigger tasks. To handle DOM elements, you need to call an action within a template event. 
+
+This is how to create an action:
 
 ~~~js
 var component = FlowComponents.define('my-component');
@@ -157,7 +165,7 @@ component.action.changeMessage = function(someValue) {
 };
 ~~~
 
-Context of the message is the component itself. You can access reactive content inside that, but the action won't re-run again.
+Context of the message is the component itself. You can also access reactive content inside that, but the action won't re-run again for a change in reactive content.
 
 There are few ways to call an action. Let's look at them.
 
@@ -178,13 +186,13 @@ Template['my-component'].events({
 
 You can also pass an action to a child component via props. Then the child component can call that action just like invoking a JavaScript function. This is how to do it.
 
-Let's say we are rendering another components like this inside our main component:
+Let's say we are rendering a component called `input` inside our main component:
 
 ~~~js
 {{> render component="input" onSubmit=action$changeMessage }}
 ~~~
 
-Then inside the `input` component, it call call the `onSubmit` property like this:
+Then inside the `input` component, it calls the `onSubmit` property like this:
 
 ~~~js
 var component = FlowComponents.define("input", function(props) {
@@ -196,7 +204,7 @@ component.action.submitMessage = function(message) {
 };
 ~~~
 
-We also call this method as "action passing". This is the basic building block for creating nested components.
+We also describe this method as "action passing". This is the basic building block for creating nested components.
 
 ## Props
 
@@ -208,7 +216,7 @@ Props is a way to pass values when rendering the component. A prop can be any va
 
 Then you can access it inside the component like this:
 
-~~~
+~~~js
 var component = FlowComponents.define("input", function(props) {
   console.log("Text is: ", props.text);
 });
@@ -224,7 +232,7 @@ You can set any number of props you like:
 }}
 ~~~
 
-You can pass a state like this:
+You can pass a state into a prop like this:
 
 ~~~html
 {{> render component="input" text=state$message }}
@@ -238,30 +246,32 @@ We've previously talked about how to pass an action like this:
 
 ## Prototypes
 
-A Prototype is a very similar to a proptype is javascript. Prototype is a common function (or property) you can access anywhere inside a component. We've used proptypes in the component we wrote in the Getting Started section.
+A Prototype is very similar to a prototype is JavaScript. Prototype is a common function (or property) you can access anywhere inside a component. We've used prototypes in the component we wrote in the Getting Started section.
 
 ~~~js
 var component = FlowComponents.define('hello-component', function(props) {  
-  this.setGreeting();
-  setInterval(this.setGreeting.bind(this), 300);
+  // see how we are using the prototype
+  this.setRandomGreeting();
+  setInterval(this.setRandomGreeting.bind(this), 300);
 });
 
-component.prototype.setGreeting = function() {
+// This is a prototype
+component.prototype.setRandomGreeting = function() {
   var greetings = ["awesome", "nice", "cool", "kind"];
   var randomGreeting = messages[Math.floor(messages.length * Math.random())];
   this.set("greeting", randomGreeting)
 };
 ~~~
 
-In that, we've created a `setGreeting` prototype and call in when a component is creating.
+In that, we've created a `setRandomGreeting` prototype and call in when a component is creating.
 
-We've also calling it for every 300 milliseconds via the `setInterval`;
+We've also calling it for every 300 milliseconds via the `setInterval`.
 
 ## Extending Components with Mixins
 
 Sometimes we create similar kind of components. Then, we've to copy and paste a lot of code including `prototypes`, `states` and `actions`. It's a bad way to manage it.
 
-That's why Mixins going to help us. With mixins we can group a set of common code and extend it with a existing components. Let's say we need to add component level subscriptions to Flow, this is how to do it :)
+That's why Mixins are going to help us. With mixins we can group a set of common code and extend it with an existing components. Let's say we need to add component level subscriptions to Flow, this is how to do it :)
 
 ~~~js
 ComponentSubs = {
@@ -270,12 +280,15 @@ ComponentSubs = {
   state: {}
 };
 
+// calls when the component is creating
 ComponentSubs.created = function() {
   this._subs = [];
 };
 
+// calls when the component is rendered
 ComponentSubs.rendered = function() {};
 
+// calls when the component is destroyed
 ComponentSubs.destroyed = function() {
   this.stopSubscriptions();
 };
@@ -299,6 +312,7 @@ ComponentSubs.prototype.stopSubscriptions = function() {
   this._subs.forEach(function(sub) {
     sub.stop();
   });
+  this._subs = [];
 };
 
 ComponentSubs.state.isReady = function() {
@@ -310,7 +324,7 @@ ComponentSubs.action.stopSubscriptions = function() {
 };
 ~~~
 
-Now you can add extend your component with the mixin we've created like this:
+Now you can extend your component with the mixin we've created. Check this:
 
 ~~~js
 var component = FlowComponents.define("my-component", function() {
@@ -323,6 +337,7 @@ component.extend(ComponentSubs);
 
 // you can use it in an action like this
 component.action.loadMore = function() {
+  this.stopSubscriptions();
   this.subscribe("mysubscription", {limit: 200});
 };
 ~~~
@@ -343,7 +358,7 @@ You can use `isReady` state inside the template like this:
 
 We can use Mixins to extend the functionalities for the component. But we can't use that to extend the user interface. That's where we can use nested components.
 
-There is no special UI for that, but you can create a component which uses few other components inside that.
+There is no special APIs for that. But you can create a component which uses few other components inside that.
 
 You can also accept an component name from the `props` and render that. For an example, let's say we are building a loading component. So, we can allow to customize the loading spinner. Here is is:
 
@@ -366,11 +381,11 @@ This is the UI for that:
 
 A Component has few different events. Here they are:
 
-* created - after the component instant created
-* rendered - after the component rendered to the screen
-* destroyed - after the component destroyed
+* created - After the component instant created
+* rendered - After the component rendered to the screen
+* destroyed - After the component destroyed
 
-You may need to use these events to customize your components. We need to use the created event almost everytime. So, that's the callback you passed as the second argument when creating the components.
+You may need to use these events to customize your components. We need to use the created event almost every time. So, that's the callback you passed as the second argument when creating the components.
 
 ~~~js
 var component = FlowComponents.create("hello", function(props) {
@@ -385,6 +400,8 @@ For other two events, they can be access anywhere inside the component like with
 * rendered - `this.onRendered(function() {})`
 * destroyed - `this.onDestroyed(function() {})`
 
+Check this example: 
+
 ~~~js
 var component = FlowComponents.create("hello", function() {
   this.onRendered(function() {
@@ -397,7 +414,7 @@ var component = FlowComponents.create("hello", function() {
 });
 ~~~
 
-Context of the callback you've passed to the component is the component itself. So, because of that something like this is possible.
+Context of the callback you've passed to a life cycle event is the component itself. So, because of that something like this is possible.
 
 ~~~js
 var component = FlowComponents.create("hello", function() {
@@ -424,11 +441,11 @@ var component = FlowComponents.create("hello", function() {
 });
 ~~~
 
-> Note: Context of the callback for `this.autorun` is also the component. That's why calling `this.set` is possible inside the autorun
+> Note: Context of the callback for `this.autorun` is also the component. That's why calling `this.set` is possible inside the autorun.
 
 ## State Functions
 
-State functions are powerful tools which helps you build components while minimizing re-renders. Before we start, let's see why need it. Look at this nested components:
+State functions is a powerful tool which helps you build components while minimizing re-renders. Before we start, let's see why need it. Look at this usage of nested components:
 
 ~~~js
 var component = FlowComponents.create("parent", function() {
@@ -448,9 +465,11 @@ This is the template of parent:
 </template>
 ~~~
 
-As you can see this is pretty straight forward. Parent component send the CPU usage for every 100 millis and then `guage` component will print it. So, what's the issue here?
+As you can see this is pretty straight forward. Parent component change the CPU usage for every 100 millis and then `guage` component will print it. So, what's the issue here?
 
-Since we get the state as `state$cpuUsage`, it's getting change every 100 millis. So, the `gauge` component will get changed at that time too. Which is very expensive and we don't need to do something like this. That's where state functions are going to help you. Before that, let's look at our gauge component.
+Since we get the state as `state$cpuUsage`, it's getting change every 100 millis. So, the `gauge` component will get changed at that time too.
+
+That means existing gauge component will be destroyed and re created again. Which is very expensive and we don't need to do something like this. That's where state functions are going to help you. Before that, let's look at how we've implemented our gauge component.
 
 ~~~js
 var component = FlowComponents.create("guage", function(props) {
@@ -465,7 +484,7 @@ This is the template:
 </template>
 ~~~
 
-#### Convert to use State Functions
+#### Converting it to use State Functions
 
 Let's change the parent template like this:
 
@@ -477,11 +496,12 @@ Let's change the parent template like this:
 
 Note that, we only change `state$cpuUsage` into `stateFn$cpuUsage`. With that, we wrap the `cpuUsage` state into a function. So, when it's get changed, it won't re-render the component.
 
-This is how to use it inside the `gauge` component.
+This is how to access the state it inside the `gauge` component.
 
 ~~~js
 var component = FlowComponents.create("guage", function(props) {
   this.autorun(function() {
+    // see now it's a function
     var value = props.value();
     this.set("value", value);
   });
@@ -490,7 +510,7 @@ var component = FlowComponents.create("guage", function(props) {
 
 As you can see, now `value` prop is a function. Now it's only reactive within the autorun we've defined. So, now we can actually, control the reactivity as we need. 
 
-So, writing `this.autorun` for every prop seems like bording task. So, we've a simple way to do it like below:
+Writing `this.autorun` for every prop seems like a boring task. That's why we introduced `this.setFn`. See how to use it. It does the exact same thing we did in the previous example.
 
 ~~~js
 var component = FlowComponents.create("guage", function(props) {
@@ -498,9 +518,9 @@ var component = FlowComponents.create("guage", function(props) {
 });
 ~~~
 
-## Block Helpers
+## Content Blocks
 
-We can use block helpers to write nested components. Here's an example for a loading component.
+We can use content blocks to write nested components. Here's an example for a loading component which uses content blocks.
 
 ~~~html
 {{#render component="loading" loaded=stateFn$loaded }}
@@ -531,9 +551,9 @@ Here's the template:
 
 ## Referencing Child Components
 
-> This API is experimental
+> This API is experimental.
 
-So, now we know how to use child components and we've seen some examples. Most of the time you can interact them by passing actions and passing state functions. 
+So, now we know how to use child components and we've seen some examples. Most of the time you can interact with them by passing actions and passing state functions. 
 
 But sometimes, you may need to refer them individually access their states. Let's look at our myForm component.
 
@@ -570,16 +590,16 @@ Template['myForm'].events({
 });
 ~~~
 
-See, we could access invidual child component by their id and get the state called value. But this API has following characteristics:
+See, we could access individual child component by their id and get the state called value. But this API has following characteristics:
 
-* You can only access child components inside template helper or an event handeler only.
-* You can't access it inside the component. (We add this restriction to avoid unnecessory re-renders)
-* Unlike id in CSS, here id is scope to a component. You can have the child components with the same id in few different components.
-* You can nest child lookups but we highly discourage that.
+* You can only access child components inside template helpers and event handlers only.
+* You can't access it inside the component. (We add this restriction to avoid unnecessary re-renders)
+* Unlike an "id" in CSS, here "id" is scope to a component. You can have child components with the same id in few different components.
+* You can nest child lookups.
 
 ## Organizing Large Components
 
-Sometimes we may be have components with a large number of states, actions and prototypes. So, it's that case, it's super hard to put them all in a single file. There's a way to put those in different files. This is how to do it.
+Sometimes our components could have a large number of states, actions and prototypes. So, it's super hard to put them all in a single file. Luckily, there's a way to put those functions in different files. This is how to do it.
 
 First create the component and name it like `component.js`
 
@@ -598,15 +618,15 @@ component.state.title = function() {
 };
 ~~~
 
-It's very important to define the component before accessing it using `.find()`. That's why we've a naming convension like above.
+It's very important to define the component before accessing it using `.find()`. That's why we've a naming convention like above.
 
-Likewise you can group `actions`, `states` and `prototypes` in anyway you like organise your component.
+Likewise you can group `actions`, `states` and `prototypes` in anyway you like organize your component.
 
 ## Accessing Component DOM
 
-We've designed components in a way that to reduce the direct interfacing with the DOM. But in practise, it's hard to do. So, if you want to access the DOM directly inside the component, here are the APIs for that. All these API are scoped to the template of the component.
+We've designed components in a way that to reduce the direct interfacing with the DOM. But in practice, it's hard to do. So, if you want to access the DOM directly inside the component, here are the APIs for that. All these API are scoped to the template of the component.
 
-* this.$(selector) - get a jquery object for the given selector
+* this.$(selector) - get a jQuery object for the given selector
 * this.find(selector) - get a one matching element for the given selector
 * this.findAll(selector) - get all matching elements to the given selector
 
@@ -616,24 +636,28 @@ Let's compare flow with some other components and UI related frameworks
 
 #### Blaze
 
-Flow Component does not replace or Blaze. Intead it's build on top of the Blaze. We are using Blaze templates to render the User Interfaces. When using Flow Components, you might not using template helpers anymore. But still, we are using the core of Blaze.
+Flow Component does not replace or Blaze. Instead it's build on top of the Blaze. We are using Blaze templates to render the user interfaces. When using Flow Components, you may don't need to use template helpers and template instances anymore. But still, we use a lot of cool features of Blaze.
 
 #### React
 
-React is a completely different UI framework. There is no support for React with flow. But, if there is someway to render React component in Blaze, so, it's possible to use them with flow too. That's because we've build on top the blaze.
+React is a completely different UI framework. There is no built in support for React with flow components. But, there are a few ways to integrate React with Meteor. Flow does not interfere with them.
+
+If there is a way to render react components inside a Blaze template, then it's possible to use React with Flow. That's because we are using Blaze templates to render the UI.
 
 #### Polymer / WebComponents
 
 Answer for this is just the same as for React.
 
-#### Ionic / Meteoric
+#### Ionic / [Meteoric](http://meteoric.github.io/)
 
 Answer for this is just the same as for React.
 
 #### Angular
 
-It might be possible to use Angular with Flow Components. But havn't try that yet.
+It might be possible to use Angular with Flow Components. But we haven't try that yet. 
 
 #### Blaze 2
 
-There is [proposal](https://meteor.hackpad.com/Proposal-for-Blaze-2-bRAxvfDzCVv) for Blaze 2. It has a it's own component system. It's still in the design phase. We designed Flow Components for our internal use at MeteorHacks. We've build few projects with Flow and it's unlikly we'll switch to a new component system unless it has all of our features. Which is unlikely to happen anyway :D
+There is an ongoing [proposal](https://meteor.hackpad.com/Proposal-for-Blaze-2-bRAxvfDzCVv) for Blaze 2. It has an it's own component system. It's still in the design phase. Try to look at it.
+
+We designed Flow Components for our internal use at MeteorHacks. We've build few projects with Flow. So, it's unlikely we'll switch to a new component system unless it has all of our features.

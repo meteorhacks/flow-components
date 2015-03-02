@@ -6,24 +6,24 @@ Flow Components has taken a lot of concepts from React's component model and app
 
 We've also added some handy features which will help you to control reactivity when building a large application.
 
-## TOC
+## Table of Contents
 
-* Why
-* Getting Started
-* States
-* Actions
-* Props
-* Prototypes
-* Extending Components with Mixins
-* Extending Components with Nested Components
-* Life Cycle Events
-* Autoruns
-* State Functions
-* Content Blocks
-* Referencing Child Components
-* Organizing Large Components
-* Accessing Component DOM
-* How Flow Component different from XXX
+* [Why](#why)
+* [Getting Started](#getting-started)
+* [States](#states)
+* [Actions](#actions)
+* [Props](#props)
+* [Prototypes](#prototypes)
+* [Extending Components with Mixins](#extending-components-with-mixins)
+* [Extending Components with Nested Components](#extending-components-with-nested-components)
+* [Life Cycle Events](#life-cycle-events)
+* [Autoruns](#autoruns)
+* [State Functions](#state-functions)
+* [Content Blocks](#content-blocks)
+* [Referencing Child Components](#referencing-child-components)
+* [Organizing Large Components](#organizing-large-components)
+* [Accessing Component DOM](#accessing-component-dom)
+* [How Flow Component different from XXX](#how-flow-components-different-from-xxx)
 
 ## Why?
 

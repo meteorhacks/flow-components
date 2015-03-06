@@ -584,7 +584,7 @@ Here's the event handler for submit.
 Template['myForm'].events({
   "click button": function() {
     var name = FlowComponents.child("name").getState("value");
-    var address = FlowComponents.child("value").getState("value");
+    var address = FlowComponents.child("address").getState("value");
 
     FlowComponents.callAction('updateServer', name, address);
   }

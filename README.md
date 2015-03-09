@@ -58,7 +58,7 @@ var component = FlowComponents.define('hello-component', function(props) {
 
 component.prototype.setRandomGreeting = function() {
   var greetings = ["awesome", "nice", "cool", "kind"];
-  var randomGreeting = messages[Math.floor(messages.length * Math.random())];
+  var randomGreeting = greetings[Math.floor(greetings.length * Math.random())];
   this.set("greeting", randomGreeting)
 };
 

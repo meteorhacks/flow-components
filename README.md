@@ -389,7 +389,7 @@ A Component has few different events. Here they are:
 You may need to use these events to customize your components. We need to use the created event almost every time. So, that's the callback you passed as the second argument when creating the components.
 
 ~~~js
-var component = FlowComponents.create("hello", function(props) {
+var component = FlowComponents.define("hello", function(props) {
   console.log("Component created with props:", props);
 });
 ~~~
@@ -404,7 +404,7 @@ For other two events, they can be access anywhere inside the component like with
 Check this example: 
 
 ~~~js
-var component = FlowComponents.create("hello", function() {
+var component = FlowComponents.define("hello", function() {
   this.onRendered(function() {
     console.log("Rendered to the screen.");
   });
@@ -418,7 +418,7 @@ var component = FlowComponents.create("hello", function() {
 Context of the callback you've passed to a life cycle event is the component itself. So, because of that something like this is possible.
 
 ~~~js
-var component = FlowComponents.create("hello", function() {
+var component = FlowComponents.define("hello", function() {
   this.onRendered(function() {
     console.log("Rendered to the screen.");
 
@@ -434,7 +434,7 @@ var component = FlowComponents.create("hello", function() {
 Sometimes we may need to use autoruns inside a component. So, when you start an autorun it needs to stop when the component destroyed. We've a simple way to do that. See:
 
 ~~~js
-var component = FlowComponents.create("hello", function() {
+var component = FlowComponents.define("hello", function() {
   this.autorun(function() {
     var posts = Posts.fetch();
     this.set("postCount", posts.length);
@@ -449,7 +449,7 @@ var component = FlowComponents.create("hello", function() {
 State functions is a powerful tool which helps you build components while minimizing re-renders. Before we start, let's see why need it. Look at this usage of nested components:
 
 ~~~js
-var component = FlowComponents.create("parent", function() {
+var component = FlowComponents.define("parent", function() {
   var self = this;
   setInterval(function() {
     var usage = Math.ceil(Math.random() * 100);
@@ -473,7 +473,7 @@ Since we get the state as `state$cpuUsage`, it's getting change every 100 millis
 That means existing gauge component will be destroyed and re created again. Which is very expensive and we don't need to do something like this. That's where state functions are going to help you. Before that, let's look at how we've implemented our gauge component.
 
 ~~~js
-var component = FlowComponents.create("guage", function(props) {
+var component = FlowComponents.define("guage", function(props) {
   this.set('value', props.value);
 });
 ~~~
@@ -500,7 +500,7 @@ Note that, we only change `state$cpuUsage` into `stateFn$cpuUsage`. With that, w
 This is how to access the state it inside the `gauge` component.
 
 ~~~js
-var component = FlowComponents.create("guage", function(props) {
+var component = FlowComponents.define("guage", function(props) {
   this.autorun(function() {
     // see now it's a function
     var value = props.value();
@@ -514,7 +514,7 @@ As you can see, now `value` prop is a function. Now it's only reactive within th
 Writing `this.autorun` for every prop seems like a boring task. That's why we introduced `this.setFn`. See how to use it. It does the exact same thing we did in the previous example.
 
 ~~~js
-var component = FlowComponents.create("guage", function(props) {
+var component = FlowComponents.define("guage", function(props) {
   this.setFn("value", props.value);
 });
 ~~~

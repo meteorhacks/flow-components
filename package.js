@@ -6,8 +6,8 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@0.9.2');
-  api.use('ui');
+  api.versionsFrom('1.0');
+  api.use('blaze');
   api.use('templating');
   api.use('reactive-var');
   api.use('reactive-dict');

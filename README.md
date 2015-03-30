@@ -1,5 +1,9 @@
 # Flow Components
 
+> This project is still work in progress and does not have unit and integration tests.
+> We are directly pushing changes to master.
+> There's no plan to change current APIs, but we don't have a guarantee.
+
 Build your Meteor app with Components.
 
 Flow Components has taken a lot of concepts from React's component model and apply them on top Blaze. It's not a 1-1 mapping of React.

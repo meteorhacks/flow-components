@@ -547,9 +547,9 @@ Here's the template:
 ~~~html
 <template name="loading">
   {{#if state$loaded}}
-    {{ flowContentBlock }}
+    {{> flowContentBlock }}
   {{else}}
-    {{ flowElseBlock }}
+    {{> flowElseBlock }}
   {{/if}}
 </template>
 ~~~

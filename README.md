@@ -32,7 +32,7 @@ We've also added some handy features which will help you to control reactivity w
 
 ## Why?
 
-When we were building the [kadira.io](https://kaidra.io) at first, we've no idea how to architect a Meteor app. After working with almost 1.5 years, we released we are doing it wrong. 
+When we were building the [kadira.io](https://kadira.io) at first, we've no idea how to architect a Meteor app. After working with almost 1.5 years, we released we are doing it wrong.
 
 So, we think a lot and played with a lot of UI frameworks and concepts. That includes [React](http://facebook.github.io/react/) and [Flux](https://facebook.github.io/flux/). After a lot of iterations and experiments, Flow Components is our component framework which is a part of the Flow Architecture for Meteor.
 
@@ -159,7 +159,7 @@ component.state.messageWithName = function() {
 
 ## Actions
 
-Components don't handle DOM events directly. But a component has actions. You can think actions are a kind of way to trigger tasks. To handle DOM elements, you need to call an action within a template event. 
+Components don't handle DOM events directly. But a component has actions. You can think actions are a kind of way to trigger tasks. To handle DOM elements, you need to call an action within a template event.
 
 This is how to create an action:
 
@@ -230,10 +230,10 @@ var component = FlowComponents.define("input", function(props) {
 You can set any number of props you like:
 
 ~~~html
-{{> render component="input" 
+{{> render component="input"
       text="This is great"
       backgroundColor="#736634"
-      fontSize=20 
+      fontSize=20
 }}
 ~~~
 
@@ -254,7 +254,7 @@ We've previously talked about how to pass an action like this:
 A Prototype is very similar to a prototype is JavaScript. Prototype is a common function (or property) you can access anywhere inside a component. We've used prototypes in the component we wrote in the Getting Started section.
 
 ~~~js
-var component = FlowComponents.define('hello-component', function(props) {  
+var component = FlowComponents.define('hello-component', function(props) {
   // see how we are using the prototype
   this.setRandomGreeting();
   setInterval(this.setRandomGreeting.bind(this), 300);
@@ -375,7 +375,7 @@ var component = FlowComponents.define("loading", function(props) {
 
 This is the UI for that:
 ~~~html
-{{#if state$loadingComponent}} 
+{{#if state$loadingComponent}}
   {{> render component=state$loadingComponent }}
 {{else}}
   Loading...
@@ -405,7 +405,7 @@ For other two events, they can be access anywhere inside the component like with
 * rendered - `this.onRendered(function() {})`
 * destroyed - `this.onDestroyed(function() {})`
 
-Check this example: 
+Check this example:
 
 ~~~js
 var component = FlowComponents.define("hello", function() {
@@ -513,7 +513,7 @@ var component = FlowComponents.define("guage", function(props) {
 });
 ~~~
 
-As you can see, now `value` prop is a function. Now it's only reactive within the autorun we've defined. So, now we can actually, control the reactivity as we need. 
+As you can see, now `value` prop is a function. Now it's only reactive within the autorun we've defined. So, now we can actually, control the reactivity as we need.
 
 Writing `this.autorun` for every prop seems like a boring task. That's why we introduced `this.setFn`. See how to use it. It does the exact same thing we did in the previous example.
 
@@ -558,14 +558,14 @@ Here's the template:
 
 > This API is experimental.
 
-So, now we know how to use child components and we've seen some examples. Most of the time you can interact with them by passing actions and passing state functions. 
+So, now we know how to use child components and we've seen some examples. Most of the time you can interact with them by passing actions and passing state functions.
 
 But sometimes, you may need to refer them individually access their states. Let's look at our myForm component.
 
 ~~~js
 var component = FlowComponents.define("myForm", function() {
 
-}); 
+});
 
 component.action.updateServer = function(name, address) {
   Meteor.call("update-profile", name, address);
@@ -624,13 +624,13 @@ First create the component and name it like `component.js`
 ~~~js
 var component = FlowComponents.define("myForm", function() {
 
-}); 
+});
 ~~~
 
 Then create a file for `states` with the name `component_states.js`.
 
 ~~~js
-var component = FlowComponents.find("myForm"); 
+var component = FlowComponents.find("myForm");
 component.state.title = function() {
 
 };
@@ -672,7 +672,7 @@ Answer for this is just the same as for React.
 
 #### Angular
 
-It might be possible to use Angular with Flow Components. But we haven't try that yet. 
+It might be possible to use Angular with Flow Components. But we haven't try that yet.
 
 #### Blaze 2
 

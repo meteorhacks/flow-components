@@ -6,9 +6,9 @@
 
 Build your Meteor app with Components.
 
-Flow Components has taken a lot of concepts from React's component model and apply them on top Blaze. It's not a 1-1 mapping of React.
+Flow Components has borrowed a lot of concepts from React's component model and applies them on top Blaze. It's not a 1-to-1 mapping of React.
 
-We've also added some handy features which will help you to control reactivity when building a large application.
+We've also added some handy features which will help you control reactivity when building a large application.
 
 ## Table of Contents
 
@@ -32,9 +32,9 @@ We've also added some handy features which will help you to control reactivity w
 
 ## Why?
 
-When we were building the [kadira.io](https://kadira.io) at first, we've no idea how to architect a Meteor app. After working with almost 1.5 years, we released we are doing it wrong.
+When we started building [Kadira.io](https://kadira.io), we had no idea how to architect a Meteor app. After working on it for almost 1.5 years, we realized we were doing it wrong.
 
-So, we think a lot and played with a lot of UI frameworks and concepts. That includes [React](http://facebook.github.io/react/) and [Flux](https://facebook.github.io/flux/). After a lot of iterations and experiments, Flow Components is our component framework which is a part of the Flow Architecture for Meteor.
+So, we thought a lot and played with a lot of UI frameworks and concepts. That includes [React](http://facebook.github.io/react/) and [Flux](https://facebook.github.io/flux/). After a lot of iterations and experiments, Flow Components is our component framework which is a part of the Flow Architecture for Meteor.
 
 ## Getting Started
 

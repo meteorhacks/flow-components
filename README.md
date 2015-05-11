@@ -243,10 +243,10 @@ component.action.submitMessage = function(message) {
   self.set('loading', true);
 
   var promise = this.onSubmit(message);
-  promose.catch(function(err) {
-    self.state('errorMessage', err.message);
+  promise.catch(function(err) {
+    self.set('errorMessage', err.message);
   }).then(function() {
-    self.state('loading', false);
+    self.set('loading', false);
   });
 };
 ~~~

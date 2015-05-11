@@ -225,6 +225,34 @@ component.action.submitMessage = function(message) {
 
 We also describe this method as "action passing". This is the basic building block for creating nested components.
 
+#### Actions and Promises
+
+We've have es6-promise support for Actions. When you call an actions either via `FlowComponents.callAction` or action passing, you'll get a promise always. Based on that promise you can model your component.
+
+Action definition, does not need to return a promise all the time. If you return a promise, Flow Component will pass it to the caller. If not, it'll create a empty promise.
+
+See: 
+
+~~~js
+var component = FlowComponents.define("input", function(props) {
+  this.onSubmit = props.onSubmit;
+});
+
+component.action.submitMessage = function(message) {
+  var self = this;
+  self.set('loading', true);
+
+  var promise = this.onSubmit(message);
+  promose.catch(function(err) {
+    self.state('errorMessage', err.message);
+  }).then(function() {
+    self.state('loading', false);
+  });
+};
+~~~
+
+Checkout this [sample repo](https://github.com/flow-examples/flow-component-promise) for a complete example.
+
 ## Props
 
 Props is a way to pass values when rendering the component. A prop can be any valid JavaScript literal, object or a function. This is how to do it:

@@ -227,7 +227,7 @@ We also describe this method as "action passing". This is the basic building blo
 
 #### Actions and Promises
 
-We've have es6-promise support for Actions. When you call an actions either via `FlowComponents.callAction` or action passing, you'll get a promise always. Based on that promise you can model your component.
+We have es6-promise support for Actions. When you call an actions either via `FlowComponents.callAction` or action passing, you'll get a promise always. Based on that promise you can model your component.
 
 Action definition, does not need to return a promise all the time. If you return a promise, Flow Component will pass it to the caller. If not, it'll create a empty promise.
 

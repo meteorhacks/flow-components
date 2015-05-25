@@ -29,7 +29,7 @@ We've also added some handy features which will help you control reactivity when
 * [Organizing Large Components](#organizing-large-components)
 * [Accessing Component DOM](#accessing-component-dom)
 * [How Flow Component different from XXX](#how-flow-components-different-from-xxx)
-* [Usage Guideline](#usage-guideline)
+* [Usage Guidelines](#usage-guidelines)
 
 ## Why?
 

@@ -29,6 +29,7 @@ We've also added some handy features which will help you control reactivity when
 * [Organizing Large Components](#organizing-large-components)
 * [Accessing Component DOM](#accessing-component-dom)
 * [How Flow Component different from XXX](#how-flow-components-different-from-xxx)
+* [Usage Guideline](#usage-guideline)
 
 ## Why?
 
@@ -721,3 +722,9 @@ It might be possible to use Angular with Flow Components. But we haven't try tha
 There is an ongoing [proposal](https://meteor.hackpad.com/Proposal-for-Blaze-2-bRAxvfDzCVv) for Blaze 2. It has an it's own component system. It's still in the design phase. Try to look at it.
 
 We designed Flow Components for our internal use at MeteorHacks. We've build few projects with Flow. So, it's unlikely we'll switch to a new component system unless it has all of our features.
+
+## Usage Guidelines
+
+We use Flow Components alot at MeteorHacks specially on Kadira and BulletProof Meteor. We follow some simple rules to manage components and do inter component communication.
+
+Here are the guidelines: https://meteorhacks.hackpad.com/Flow-Components-Guideline-gAn4odmDRw3

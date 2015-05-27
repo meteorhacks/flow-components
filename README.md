@@ -253,6 +253,31 @@ component.action.submitMessage = function(message) {
 
 Checkout this [sample repo](https://github.com/flow-examples/flow-component-promise) for a complete example.
 
+#### Disable Promises Temporarily
+
+Sometime we need to have actions simply sending the plain return rather than wrapping the return as a promise. For those scenarios, we can temporarily disable promise support like this. 
+
+~~~js
+var component = FlowComponents.define("input", function(props) {
+  this.onNewTooltip = props.onNewTooltip;
+  this.dataFn = props.dataFn;
+  this.autorun(this.formatTooltips);
+});
+
+component.prototype.formatTooltips = function() {
+  var data = this.dataFn();
+  var formattedData = this.noPromises(function() {
+    var self = this;
+    return data.map(function(item) {
+      return self.onNewTooltip(item);
+    });
+  });
+
+  return formattedData;
+};
+~~~
+
+
 ## Props
 
 Props is a way to pass values when rendering the component. A prop can be any valid JavaScript literal, object or a function. This is how to do it:

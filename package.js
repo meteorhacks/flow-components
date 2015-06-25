@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Flow Components',
-  version: '0.0.40',
+  version: '0.0.41',
   git: 'https://github.com/meteorhacks/flow-components',
   name: "meteorhacks:flow-components"
 });

@@ -375,7 +375,7 @@ ComponentSubs.prototype.subscribe = function() {
 ComponentSubs.prototype.ready = function() {
   var ready = true;
   this._subs.forEach(function(sub) {
-    ready = sub.ready();
+    ready = ready && sub.ready();
   });
 
   return ready;

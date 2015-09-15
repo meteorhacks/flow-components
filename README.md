@@ -135,7 +135,7 @@ var component = FlowComponents.define('my-component', function() {
 
 #### `this.set` with large object
 
-`this.set` is a useful function, but it does value cloning and eqaulity checks. So, if you need to set a very large object this will be an issue.
+`this.set` is a useful function, but it does value cloning and equality checks. So, if you need to set a very large object this will be an issue.
 But there is a solution to avoid that. Here's how to do it:
 
 ~~~js

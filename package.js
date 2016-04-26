@@ -14,6 +14,7 @@ Package.onUse(function (api) {
   api.use('blaze');
   api.use('templating');
   api.use('underscore');
+  api.use('ejson');
   api.use('raix:eventemitter@0.1.1');
   api.use('cosmos:browserify@0.1.3', 'client');
 
